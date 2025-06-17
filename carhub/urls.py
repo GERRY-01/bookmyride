@@ -3,4 +3,7 @@ from .import views
 
 urlpatterns = [
     path('admin-portal-72e9b', views.admin_dashboard, name='admin_dashboard'),
+    path('register',views.register,name='register'),
+    path('login',views.login,name='login'),
+    path('home',views.home,name='home')
 ]
