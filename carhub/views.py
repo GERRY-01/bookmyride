@@ -1,5 +1,5 @@
 from django.shortcuts import redirect, render
-from django.contrib.auth import authenticate,login as auth_login
+from django.contrib.auth import authenticate,login as auth_login,logout
 from django.contrib.auth.models import User
 from django.contrib import messages
 from .models import Car
@@ -96,3 +96,9 @@ def update_car(request,car_id):
         return redirect("admin_page")
     return render(request,'update_car.html',{'car':car})
 
+def logout_user(request):
+    is_admin = request.user.is_staff
+    logout(request)
+    if is_admin:
+        return redirect("admin_dashboard")
+    return redirect("home")
