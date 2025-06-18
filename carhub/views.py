@@ -2,6 +2,7 @@ from django.shortcuts import redirect, render
 from django.contrib.auth import authenticate,login as auth_login
 from django.contrib.auth.models import User
 from django.contrib import messages
+from .models import Car
 
 # Create your views here.
 
@@ -45,11 +46,31 @@ def register(request):
     return render(request, 'register.html')
 
 def login(request):
+    if request.method == 'POST':
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+        
+        user = authenticate(request,username=username,password=password)
+        
+        if user is not None:
+            auth_login(request,user)
+            return redirect("home")
+        else:
+            messages.error(request,"Invalid credentials")
     return render(request,'login.html')
 
 def home(request):
     return render(request,'home.html')
 
-def admin_page(request):
-    return render(request,'adminpage.html')
+def admin_page(request): 
+    if request.method == 'POST':
+        image = request.FILES.get("image")
+        name = request.POST.get("name")
+        description = request.POST.get("description")
+        price = request.POST.get("price")
+        cars = Car(image=image,name=name,description=description,price_per_day=price)
+        cars.save()
+        
+    Cars = Car.objects.all()        
+    return render(request,'adminpage.html',{'Cars':Cars})
 
