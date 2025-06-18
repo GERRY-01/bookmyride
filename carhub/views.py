@@ -74,3 +74,8 @@ def admin_page(request):
     Cars = Car.objects.all()        
     return render(request,'adminpage.html',{'Cars':Cars})
 
+def delete_car(request,car_id):
+    car = Car.objects.get(id=car_id)
+    car.delete()
+    return redirect("admin_page")
+
