@@ -100,7 +100,7 @@
 <body>
     <div class="login-container">
         <h2>Login</h2>
-        <form method="POST" action="{% url 'login' %}">
+        <form method="POST">
             {% csrf_token %}
             <div class="form-group">
                 <label for="username">Username or Email</label>
