@@ -179,6 +179,42 @@
       font-size: 24px;
       cursor: pointer;
     }
+    .card-actions {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 10px;
+    }
+
+    .edit-btn,
+    .delete-btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    color: #fff;
+    }
+
+    .edit-btn {
+    background-color: #2e86de;
+    }
+
+    .edit-btn:hover {
+    background-color: #1b4f72;
+    }
+
+    .delete-btn {
+    background-color: #e74c3c;
+    }
+
+    .delete-btn:hover {
+    background-color: #c0392b;
+    }
+
   </style>
 </head>
 <body>
@@ -208,7 +244,7 @@
             <p class="description">{{ car.description }}</p>
 
                 <div class="card-actions">
-                    <a href="" class="edit-btn">Edit</a>
+                    <a href="{% url 'update_car' car.id %}" class="edit-btn">Edit</a>
                     <form action="{% url 'delete_car' car.id %}" method="POST" style="display:inline;">
                     {% csrf_token %}
                     <button type="submit" class="delete-btn">Delete</button>
