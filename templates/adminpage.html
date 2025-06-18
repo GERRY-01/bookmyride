@@ -228,7 +228,11 @@
 
     <div class="actions">
       <button id="openModalBtn">Add New Car</button>
-      <button onclick="location.href=">Logout</button>
+      <form action="{% url 'logout' %}" method="POST">
+            {% csrf_token %}
+            <button type="submit">Logout</button>
+      </form>
+
     </div>
 
         <div class="card-list">
