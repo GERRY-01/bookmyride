@@ -79,3 +79,20 @@ def delete_car(request,car_id):
     car.delete()
     return redirect("admin_page")
 
+def update_car(request,car_id):
+    car = Car.objects.get(id=car_id)
+    if request.method == 'POST':
+        image = request.FILES.get("image")
+        name = request.POST.get("name")
+        description = request.POST.get("description")
+        price = request.POST.get("price")
+        
+        if image:
+           car.image = image
+        car.name = name
+        car.description = description
+        car.price_per_day = price
+        car.save()
+        return redirect("admin_page")
+    return render(request,'update_car.html',{'car':car})
+
