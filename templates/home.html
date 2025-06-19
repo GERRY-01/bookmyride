@@ -206,6 +206,123 @@
     }
     }
 
+    .booking-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 10px;
+    }
+
+    .book-btn {
+      background-color: #0c2d57;
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.3s ease;
+    }
+
+    .book-btn:hover {
+      background-color: #103a6d;
+    }
+
+    .price {
+      font-size: 14px;
+      color: #333;
+      font-weight: 500;
+    }
+
+    .payment-modal {
+      display: none;
+      position: fixed;
+      z-index: 100;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .payment-content {
+      background: #fff;
+      padding: 25px 30px;
+      border-radius: 12px;
+      width: 90%;
+      max-width: 400px;
+      position: relative;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      animation: slideIn 0.3s ease-out;
+    }
+
+    @keyframes slideIn {
+      from {
+        transform: translateY(50px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .payment-content h3 {
+      margin-bottom: 10px;
+      color: #0c2d57;
+    }
+
+    .payment-content .price {
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+
+    .payment-content label {
+      display: block;
+      margin-top: 10px;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .payment-content input {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      outline: none;
+    }
+
+    .confirm-btn {
+      margin-top: 20px;
+      background-color: #0c2d57;
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 8px;
+      width: 100%;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background 0.3s;
+    }
+
+    .confirm-btn:hover {
+      background-color: #103a6d;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 12px;
+      right: 15px;
+      font-size: 22px;
+      font-weight: bold;
+      color: #333;
+      cursor: pointer;
+    }
+
+
   </style>
 </head>
 <body>
@@ -240,12 +357,41 @@
           <div class="image-container">
             <img src="{{ car.image.url }}" alt="{{ car.name }}">
             <div class="overlay">
-              <p>${{ car.price_per_day }} / day</p>
+              <p>Ksh {{ car.price_per_day }} / day</p>
             </div>
           </div>
           <h3>{{ car.name }}</h3>
           <p>{{ car.description }}</p>
+
+          <!--booking section-->
+            <div class="booking-section">
+              <button class="book-btn" onclick="openPayment('{{ car.id }}')">Book Now</button>
+              <p class="price">Ksh {{ car.price_per_day }} / day</p>
+            </div>
+
         </div>
+
+          <!-- Hidden Payment Form -->
+          <div class="payment-modal" id="payment-{{ car.id }}">
+            <form method="POST" action="" class="payment-content">
+              {% csrf_token %}
+              <span class="close-btn" onclick="closePayment('{{ car.id }}')">&times;</span>
+
+              <h3>Payment for {{ car.name }}</h3>
+              <p class="price">Price: Ksh {{ car.price_per_day }}</p>
+
+              <label for="full_name">Full Name</label>
+              <input type="text" name="full_name" id="full_name" placeholder="Your full name" required>
+
+              <label for="phone">Phone Number</label>
+              <input type="text" name="phone" id="phone" placeholder="07xx xxx xxx" required>
+
+              <button type="submit" class="confirm-btn">Confirm Payment</button>
+            </form>
+          </div>
+
+
+
       {% empty %}
         <p>No cars available.</p>
       {% endfor %}
@@ -264,6 +410,15 @@
 
 
  <script>
+
+  function openPayment(carId) {
+    document.getElementById(`payment-${carId}`).style.display = "flex";
+  }
+
+  function closePayment(carId) {
+    document.getElementById(`payment-${carId}`).style.display = "none";
+  }
+
   const typeText = (element, text, speed = 150, callback) => {
     let index = 0;
     element.textContent = "";
