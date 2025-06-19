@@ -17,47 +17,132 @@
       color: #333;
       line-height: 1.6;
     }
+header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 10px 20px;
+  background-color: #333;
+  color: white;
+  position: relative;
+  background-color: #0c2d57;
+}
 
-    header {
-      background: #0c2d57;
-      color: white;
-      padding: 1rem 2rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-    }
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+  margin-left: 10px;
+  margin-right: auto; /* Give logo breathing room */
+}
 
-    .logo {
-      font-size: 1.5rem;
-      font-weight: bold;
-    }
+nav {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
 
-    nav {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-    }
+nav a {
+  text-decoration: none; /* Remove default underline */
+  position: relative;
+  color:white;
+}
 
-    nav a {
-      color: white;
-      text-decoration: none;
-      font-size: 1rem;
-    }
+nav a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 3px;               /* thicker underline */
+  width: 0;
+  background-color: #ffeb3b; /* yellow underline */
+  transition: width 0.3s ease;
+}
 
-    .btns {
-      display: flex;
-      gap: 1rem;
-    }
+nav a:hover::after {
+  width: 100%;               /* underline grows to full width of link */
+}
 
-    .btns a {
-      padding: 0.5rem 1rem;
-      background: #ffc436;
-      color: black;
-      border-radius: 5px;
-      text-decoration: none;
-      font-weight: bold;
-    }
+.signup {
+  background-color: #28a745;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+.login {
+  background-color: #007bff;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+.menu-toggle {
+  display: none;
+}
+
+.close-btn {
+  display: none; /* ❗ Hidden by default (desktop) */
+}
+
+/* Mobile styles */
+@media (max-width: 768px) {
+  .menu-toggle {
+    display: block;
+    font-size: 28px;
+    cursor: pointer;
+    margin-right: 10px;
+  }
+
+  nav {
+    flex-direction: column;
+    background-color: #444;
+    position: fixed;
+    top: 50px; 
+    left: -60%;
+    width: 60%;
+    height: 80%;
+    padding-top: 20px;
+    border-radius: 0 5px 5px 0;
+    transition: left 0.3s ease;
+    z-index: 1000;
+  }
+
+  nav a {
+    padding: 12px 15px;
+    border-bottom: 1px solid #555;
+  }
+
+  nav a:hover {
+    background-color: #555;
+    color: #ffeb3b;
+  }
+
+  .close-btn {
+    display: block; /* ✅ Only visible on mobile */
+    font-size: 24px;
+    color: white;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+  }
+
+  .btns {
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+    padding: 0 15px; /* add horizontal padding inside the nav */
+  }
+
+  .btns a {
+    padding: 10px;
+    text-align: center;
+    border-radius: 4px;
+  }
+}
+
 
     .hero {
       padding: 4rem 2rem;
@@ -357,27 +442,35 @@
       80% { opacity: 1; }
       100% { opacity: 0; display: none; }
     }
-
    
+
   </style>
 </head>
 <body>
 
-  <header>
-    <div class="logo">CarBooking</div>
-    <nav>
-      <a href="#">Home</a>
-      <a href="#">About</a>
-      <a href="#">Contact</a>
-      <a href="#">FAQ</a>
-      <a href="#">Terms</a>
-      <a href="#">Privacy</a>
-    </nav>
+ <header>
+  <!-- ☰ button on the left -->
+  <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+
+  <div class="logo">CarBooking</div>
+
+  <nav id="navbar">
+    <!-- ✖ close button inside the nav -->
+    <span class="close-btn" onclick="toggleMenu()" style="color: white;">&times;</span>
+    
+    <a href="#">Home</a>
+    <a href="#">About</a>
+    <a href="#">Contact</a>
+    <a href="#">FAQ</a>
+    <a href="#">Terms</a>
+    <a href="#">Privacy</a>
     <div class="btns">
-      <a href="{% url 'register' %}">Sign Up</a>
-      <a href="{% url 'login' %}">Login</a>
+      <a href="{% url 'register' %}" class="signup">Sign Up</a>
+      <a href="{% url 'login' %}" class="login">Login</a>
     </div>
-  </header>
+  </nav>
+</header>
+
      
   {% if messages %}
   <div id="flash-messages">
@@ -498,6 +591,17 @@
   };
 
   loopTyping(); // Start the first loop
+
+  function toggleMenu() {
+  const nav = document.getElementById("navbar");
+  
+  if (nav.style.left === "0px") {
+    nav.style.left = "-70%";
+  } else {
+    nav.style.left = "0px";
+  }
+}
+
 </script>
 
 
