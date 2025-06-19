@@ -59,8 +59,9 @@ def login(request):
             messages.error(request,"Invalid credentials")
     return render(request,'login.html')
 
-def home(request):
-    return render(request,'home.html')
+def home(request):    
+    cars = Car.objects.all()
+    return render(request,'home.html',{'cars':cars})
 
 def admin_page(request): 
     if request.method == 'POST':
