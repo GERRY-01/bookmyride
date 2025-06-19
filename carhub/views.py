@@ -124,6 +124,19 @@ def lipa_na_mpesa_online(request):
         phone = request.POST.get("phone")
         amount = request.POST.get("amount")
         
+        if phone.startswith("07") and len(phone) == 10:
+            phone = "254" + phone[1:]
+        elif phone.startswith("+254") and len(phone) == 13:
+            phone = phone[1:]
+        elif phone.startswith("254") and len(phone) == 12:
+            phone = phone
+        else:
+            messages.error(request,"Invalid phone number")
+            return redirect("home")
+        
+        phone = phone.strip().replace(" ", "")
+
+        
         timestamp = datetime.now().strftime('%Y%m%d%H%M%S')
         data_to_encode = f"{settings.MPESA_SHORTCODE}{settings.MPESA_PASSKEY}{timestamp}"
         password = base64.b64encode(data_to_encode.encode()).decode()
@@ -146,5 +159,12 @@ def lipa_na_mpesa_online(request):
         }
         
         res = requests.post(api_url, json=payload, headers=headers)
-        return JsonResponse(res.json())
+        res_data = res.json()
+    
+        if res_data.get("ResponseCode") == "0":
+            messages.success(request, "Payment request sent. Check your phone.")
+        else:
+            messages.error(request, res_data.get("errorMessage", "Something went wrong. Try again."))
+
+        return redirect("home")
     return render(request,'home.html')
