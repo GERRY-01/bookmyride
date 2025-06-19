@@ -214,6 +214,27 @@
     .delete-btn:hover {
     background-color: #c0392b;
     }
+    .home-link {
+    text-align: left;
+    margin: 20px 0 0 20px;
+    }
+
+    .home-link a {
+    text-decoration: none;
+    background-color: #f0f0f0;
+    padding: 10px 15px;
+    border-radius: 8px;
+    color: #333;
+    font-weight: 500;
+    transition: background-color 0.3s, color 0.3s;
+    display: inline-block;
+    }
+
+    .home-link a:hover {
+    background-color: #007bff;
+    color: white;
+    }
+
 
   </style>
 </head>
@@ -232,8 +253,10 @@
             {% csrf_token %}
             <button type="submit">Logout</button>
       </form>
-
     </div>
+                <div class="home-link">
+                    <a href="{% url 'home' %}">← Go to Home Page</a>
+                </div>
 
         <div class="card-list">
         {% for car in Cars %}
