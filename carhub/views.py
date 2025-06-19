@@ -1,8 +1,14 @@
+import base64
 from django.shortcuts import redirect, render
 from django.contrib.auth import authenticate,login as auth_login,logout
 from django.contrib.auth.models import User
 from django.contrib import messages
 from .models import Car
+import requests
+from django.conf import settings
+from django.http import JsonResponse
+from datetime import datetime
+from requests.auth import HTTPBasicAuth
 
 # Create your views here.
 
@@ -103,3 +109,42 @@ def logout_user(request):
     if is_admin:
         return redirect("admin_dashboard")
     return redirect("home")
+
+# Integrating my app with mpesa API
+
+def get_access_token(request):
+    consumer_key = settings.MPESA_CONSUMER_KEY
+    consumer_secret = settings.MPESA_CONSUMER_SECRET
+    api_URL = "https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials"
+    r = requests.get(api_URL, auth=HTTPBasicAuth(consumer_key, consumer_secret))
+    return r.json()['access_token']
+
+def lipa_na_mpesa_online(request):
+    if request.method == 'POST':
+        phone = request.POST.get("phone")
+        amount = request.POST.get("amount")
+        
+        timestamp = datetime.now().strftime('%Y%m%d%H%M%S')
+        data_to_encode = f"{settings.MPESA_SHORTCODE}{settings.MPESA_PASSKEY}{timestamp}"
+        password = base64.b64encode(data_to_encode.encode()).decode()
+        
+        access_token = get_access_token(request)
+        api_url = settings.MPESA_BASE_URL
+        headers = {"Authorization": "Bearer %s" % access_token}
+        payload = {
+            "BusinessShortCode": settings.MPESA_SHORTCODE,
+            "Password": password,
+            "Timestamp": timestamp,
+            "TransactionType": "CustomerPayBillOnline",
+            "Amount": amount,
+            "PartyA": phone,
+            "PartyB": settings.MPESA_SHORTCODE,
+            "PhoneNumber": phone,
+            "CallBackURL": "https://mydomain.com/payload",
+            "AccountReference": "Car Booking",
+            "TransactionDesc": "Payment of Car Booking"
+        }
+        
+        res = requests.post(api_url, json=payload, headers=headers)
+        return JsonResponse(res.json())
+    return render(request,'home.html')
