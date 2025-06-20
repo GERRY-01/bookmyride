@@ -737,7 +737,7 @@ nav a:hover::after {
   margin: 0;
   font-size: 16px;
   color: #333;
-  background: #fff;
+  background: #eef6fb;
   padding: 10px 15px;
   border-radius: 6px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.05);
@@ -759,6 +759,61 @@ nav a:hover::after {
 }
 
 /* end of FAQs */
+
+/* terms and conditions */
+
+.terms-section {
+  background: #e8f0fe; /* light bluish background for calm, clean look */
+  padding: 60px 20px;
+  max-width: 900px;
+  margin: 60px auto;
+  border-radius: 10px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+  opacity: 0;
+  transform: translateX(-50px);
+  transition: opacity 1s ease, transform 1s ease;
+}
+
+.terms-section.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.terms-section h2 {
+  text-align: center;
+  color: #0d47a1; /* rich blue */
+  font-size: 38px;
+  margin-bottom: 30px;
+  letter-spacing: 1px;
+}
+
+.terms-content p {
+  font-size: 17px;
+  color: #333; /* dark gray for good readability */
+  line-height: 1.8;
+  margin-bottom: 20px;
+  background: #ffffff;
+  padding: 18px 20px;
+  border-left: 4px solid #0d47a1; /* visual indicator */
+  border-radius: 6px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+}
+
+.terms-content p:last-child {
+  margin-bottom: 0;
+}
+
+@media (max-width: 768px) {
+  .terms-section h2 {
+    font-size: 28px;
+  }
+
+  .terms-content p {
+    font-size: 15px;
+    padding: 14px 16px;
+  }
+}
+/* end of terms and conditions */
   </style>
 </head>
 <body>
@@ -875,7 +930,10 @@ nav a:hover::after {
       <span class="toggle-icon">+</span>
     </div>
     <div class="faq-answer">
-      <p>You can book a car by selecting your preferred vehicle, filling out the booking form, and confirming your payment. It’s fast and easy!</p>
+      <p> Create an account on our website, choose the car you want, and click the <strong style="color: orangered;">Book Now</strong> button. 
+      Enter your phone number and the amount you'd like to pay. Confirm your payment, 
+      and you will receive a confirmation notification on your phone via M-PESA.
+      It’s quick, easy, and secure!</p>
     </div>
   </div>
 
@@ -900,6 +958,25 @@ nav a:hover::after {
   </div>
 </section>
 <!--End of FAQs-->
+
+
+      <!--Terms and Conditions-->
+      <section class="terms-section" id="terms">
+        <h2>Our Terms & Conditions</h2>
+        <div class="terms-content">
+          <p>
+            By using our car booking service, you agree to comply with our terms and conditions. Bookings must be made using valid personal information. All payments should be completed through the approved M-PESA system on our platform. Once a booking is confirmed, the vehicle will be reserved for the agreed duration.
+          </p>
+          <p>
+            Cancellations made at least 24 hours before the pickup time are eligible for a full refund. Late cancellations may attract a service charge. It is the responsibility of the renter to inspect the vehicle at the time of pickup and report any pre-existing damages.
+          </p>
+          <p>
+            Vehicles must be returned on time, in good condition, and with a full fuel tank unless otherwise agreed. Failure to return the vehicle as agreed may result in additional charges. We reserve the right to modify these terms at any time, and continued use of our service signifies acceptance of any changes.
+          </p>
+        </div>
+      </section>
+      <!--end of terms and conditions-->
+
 
       <!--contacts section-->
       <section class="contact-us" id="contact">
@@ -1040,6 +1117,19 @@ window.addEventListener('scroll', function() {
 
   if (position < screenHeight - 100) {
     faqSection.classList.add('visible');
+  }
+});
+
+//onscroll for Terms and conditions 
+window.addEventListener('scroll', function() {
+  const termsSection = document.querySelector('.terms-section');
+  const position = termsSection.getBoundingClientRect().top;
+  const screenHeight = window.innerHeight;
+
+  if (position < screenHeight - 100) {
+    termsSection.classList.add('visible');
+  } else {
+    termsSection.classList.remove('visible');
   }
 });
 
