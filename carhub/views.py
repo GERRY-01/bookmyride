@@ -44,6 +44,11 @@ def register(request):
             else:
                 user = User.objects.create_user(username=username,email=email,password=password1)
                 user.save()
+                
+                #authenticate the user after successfull registration
+                user = authenticate(request,username=username,password=password1)
+                if user is not None:
+                   auth_login(request,user)
                 messages.success(request,"Account created successfully")
                 return redirect("home")
         else:
@@ -65,9 +70,12 @@ def login(request):
             messages.error(request,"Invalid credentials")
     return render(request,'login.html')
 
-def home(request):    
+def home(request):  
+    username = None
+    if request.user.is_authenticated:
+        username = request.user.username  
     cars = Car.objects.all()
-    return render(request,'home.html',{'cars':cars})
+    return render(request,'home.html',{'cars':cars,'username':username})
 
 def admin_page(request): 
     if request.method == 'POST':
