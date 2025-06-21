@@ -68,6 +68,7 @@ def login(request):
             return redirect("home")
         else:
             messages.error(request,"Invalid credentials")
+            return redirect("login")
     return render(request,'login.html')
 
 def home(request):  
