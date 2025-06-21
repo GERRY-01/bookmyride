@@ -130,21 +130,57 @@ header {
 
 /*  end of navbar...................................*/
 
-    .hero {
-      padding: 4rem 2rem;
-      text-align: center;
-      background: url('https://images.unsplash.com/photo-1511919884226-fd3cad34687c?auto=format&fit=crop&w=1500&q=80') no-repeat center center/cover;
-      color: white;
-    }
-  
-    .hero h1 {
-      font-size: 3rem;
-      margin-bottom: 1rem;
-    }
+   .hero {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
 
-    .hero p {
-      font-size: 1.2rem;
-    }
+.hero-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+}
+
+.hero-overlay {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.5); /* translucent dark overlay */
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 90%;
+}
+
+/* Mobile styling */
+@media (max-width: 768px) {
+  .hero {
+    height: 80vh; /* shorter height on mobile */
+    padding: 20px;
+  }
+
+  .hero-overlay h1 {
+    font-size: 1.8rem;
+  }
+
+  .hero-overlay p {
+    font-size: 1rem;
+  }
+
+  .hero-video {
+    object-fit: cover;
+  }
+}
+
 
     .car-section {
       padding: 40px 20px;
@@ -228,6 +264,7 @@ header {
     @media (max-width: 768px) {
       .car-card {
         width: 90%;
+        min-width: 280px;
       }
     }
 
@@ -949,9 +986,16 @@ header {
   </div>
 {% endif %}
   
-  <section class="hero" id="home">
-  <h1 class="typing-text" data-text="Book Your Dream Car Now"></h1>
-  <p class="typing-text" data-text="Affordable, Reliable, and Fast Car Booking Services"></p>
+<!--video-->  
+<section class="hero" id="home">
+  <video autoplay muted loop playsinline class="hero-video">
+    <source src="{% static 'videos/carvideo.mp4' %}" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+  <div class="hero-overlay">
+    <h1>Welcome to CarBooking</h1>
+    <p>Your trusted car rental service</p>
+  </div>
 </section>
 
 
@@ -1149,44 +1193,6 @@ header {
     document.getElementById(`payment-${carId}`).style.display = "none";
   }
 
-  const typeText = (element, text, speed = 150, callback) => {
-    let index = 0;
-    element.textContent = "";
-
-    const typing = () => {
-      if (index < text.length) {
-        element.textContent += text.charAt(index);
-        index++;
-        setTimeout(typing, speed);
-      } else if (callback) {
-        setTimeout(callback, 1500); // Pause before next element or loop
-      }
-    };
-
-    typing();
-  };
-
-  const elements = document.querySelectorAll(".typing-text");
-
-  const loopTyping = () => {
-    if (elements.length > 0) {
-      const first = elements[0];
-      const second = elements[1];
-
-      typeText(first, first.dataset.text, 150, () => {
-        typeText(second, second.dataset.text, 120, () => {
-          setTimeout(() => {
-            first.textContent = "";
-            second.textContent = "";
-            loopTyping(); // restart the typing
-          }, 2000); // wait before restarting the loop
-        });
-      });
-    }
-  };
-
-  loopTyping(); // Start the first loop 
-
   function toggleMenu() {
   const nav = document.getElementById("navbar");
   
@@ -1281,5 +1287,4 @@ window.addEventListener('scroll', function() {
 
 </body>
 </html>
-
 
