@@ -6,7 +6,7 @@ from django.contrib import messages
 from .models import Car
 import requests
 from django.conf import settings
-from django.http import JsonResponse
+from django.http import HttpResponse, JsonResponse
 from datetime import datetime
 from requests.auth import HTTPBasicAuth
 
@@ -176,3 +176,6 @@ def lipa_na_mpesa_online(request):
 
         return redirect("home")
     return render(request,'home.html')
+
+def health_check(request):
+    return HttpResponse("OK", status=200)
