@@ -123,7 +123,7 @@ def logout_user(request):
 def get_access_token(request):
     consumer_key = settings.MPESA_CONSUMER_KEY
     consumer_secret = settings.MPESA_CONSUMER_SECRET
-    api_URL = "https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials"
+    api_URL = settings.MPESA_API_URL
     r = requests.get(api_URL, auth=HTTPBasicAuth(consumer_key, consumer_secret))
     return r.json()['access_token']
 
@@ -150,7 +150,7 @@ def lipa_na_mpesa_online(request):
         password = base64.b64encode(data_to_encode.encode()).decode()
         
         access_token = get_access_token(request)
-        api_url = settings.MPESA_BASE_URL
+        base_url = settings.MPESA_BASE_URL
         headers = {"Authorization": "Bearer %s" % access_token}
         payload = {
             "BusinessShortCode": settings.MPESA_SHORTCODE,
@@ -166,7 +166,7 @@ def lipa_na_mpesa_online(request):
             "TransactionDesc": "Payment of Car Booking"
         }
         
-        res = requests.post(api_url, json=payload, headers=headers)
+        res = requests.post(base_url, json=payload, headers=headers)
         res_data = res.json()
     
         if res_data.get("ResponseCode") == "0":
