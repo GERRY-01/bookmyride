@@ -91,17 +91,17 @@ header {
 
 /* Auth buttons */
 .auth-bar a {
-  color: #f1c40f;
+  color: white;
   text-decoration: none;
   padding: 6px 12px;
-  background-color: white;
+  background-color: orange;
   border-radius: 4px;
   font-weight: bold;
   transition: background 0.3s, color 0.3s;
 }
 
 .auth-bar a:hover {
-  background-color: #f1c40f;
+  background-color:rgb(236, 110, 7);
   color: white;
 }
 
@@ -997,21 +997,31 @@ header {
 
           <!-- Hidden Payment Form -->
           <div class="payment-modal" id="payment-{{ car.id }}">
-            <form method="POST" action="{% url 'lipa_na_mpesa_online' %}" class="payment-content">
-              {% csrf_token %}
-              <span onclick="closePayment('{{ car.id }}')" style="color: black; font-size: 24px; cursor: pointer; position: absolute; top: 10px; right: 10px;">&times;</span>
-              <h3>Payment for {{ car.name }}</h3>
-              <p class="price">Price: Ksh {{ car.price_per_day }}</p>
+              <div class="payment-content">
+                  {% csrf_token %}
+                  <span onclick="closePayment('{{ car.id }}')" style="color: black; font-size: 24px; cursor: pointer; position: absolute; top: 10px; right: 10px;">&times;</span>
+                  <h3>Payment for {{ car.name }}</h3>
+                  <p class="price">Price: Ksh {{ car.price_per_day }}</p>
 
-              <label for="amount">amount</label>
-              <input type="text" name="amount" id="amount" placeholder="Enter amount" required>
+                  {% if user.is_authenticated %}
+                      <form method="POST" action="{% url 'lipa_na_mpesa_online' %}">
+                          <label for="amount">Amount</label>
+                          <input type="text" name="amount" id="amount" placeholder="Enter amount" required>
 
-              <label for="phone">Phone Number</label>
-              <input type="text" name="phone" id="phone" placeholder="07xx xxx xxx" required>
+                          <label for="phone">Phone Number</label>
+                          <input type="text" name="phone" id="phone" placeholder="07xx xxx xxx" required>
 
-              <button type="submit" class="confirm-btn">Confirm Payment</button>
-            </form>
+                          <button type="submit" class="confirm-btn">Confirm Payment</button>
+                      </form>
+                  {% else %}
+                      <div style="margin-top: 20px; text-align: center; color: #e74c3c; font-weight: bold;">
+                          Please <a href="{% url 'login' %}" style="color: #3498db;">Login</a> or 
+                          <a href="{% url 'register' %}" style="color: #3498db;">Sign Up</a> to continue with payment.
+                      </div>
+                  {% endif %}
+              </div>
           </div>
+
 
       {% empty %}
         <p>No cars available.</p>
@@ -1122,9 +1132,9 @@ header {
   <footer>
     <p>&copy; 2025 CarBooking. All rights reserved.</p>
     <div>
-      <a href="#">Terms</a> | 
-      <a href="#">Privacy</a> | 
-      <a href="#">FAQ</a>
+      <a href="#terms">Terms</a> | 
+      <a href="#privacy">Privacy</a> | 
+      <a href="#faq">FAQ</a>
     </div>
   </footer>
 
