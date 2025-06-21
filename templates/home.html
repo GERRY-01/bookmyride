@@ -949,7 +949,9 @@ header {
 
   <!-- Right side: Auth buttons + User -->
   <div class="auth-bar" style="display: flex; align-items: center; gap: 15px;">
+    {% if not user.is_authenticated %}
     <a href="{% url 'register' %}" class="signup">Sign Up</a>
+    {% endif %}
      {% if user.is_authenticated %}
         <a href="{% url 'logout' %}" class="login">Logout</a>
     {% else %}
