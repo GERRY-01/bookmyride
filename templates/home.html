@@ -11,6 +11,9 @@
       padding: 0;
       box-sizing: border-box;
     }
+    html {
+      scroll-behavior: smooth;
+    }
 
     body {
       font-family: 'Segoe UI', sans-serif;
@@ -36,114 +39,96 @@ header {
   margin-right: auto; /* Give logo breathing room */
 }
 
-nav {
+/* Main navbar */
+/* Slide-in menu */
+#navbar {
+  position: fixed;
+  top: 0;
+  left: -100%;
+  height: 100vh;
+  width: 250px;
+  background-color: #2c3e50;
+  color: white;
   display: flex;
-  gap: 15px;
-  align-items: center;
+  flex-direction: column;
+  padding: 20px;
+  transition: left 0.3s ease;
+  z-index: 999;
 }
 
-nav a {
-  text-decoration: none; /* Remove default underline */
-  position: relative;
-  color:white;
-}
-
-nav a::after {
-  content: '';
-  position: absolute;
+#navbar.active {
   left: 0;
-  bottom: 0;
-  height: 3px;               /* thicker underline */
-  width: 0;
-  background-color: #ffeb3b; /* yellow underline */
-  transition: width 0.3s ease;
-}
-
-nav a:hover::after {
-  width: 100%;               /* underline grows to full width of link */
-}
-
-.signup {
-  background-color: #28a745;
-  color: white;
-  padding: 5px 10px;
-  border-radius: 4px;
-  font-weight: bold;
-}
-
-.login {
-  background-color: #007bff;
-  color: white;
-  padding: 5px 10px;
-  border-radius: 4px;
-  font-weight: bold;
-}
-
-.menu-toggle {
-  display: none;
 }
 
 .close-btn {
-  display: none; /* ❗ Hidden by default (desktop) */
+  font-size: 24px;
+  align-self: flex-end;
+  cursor: pointer;
+  margin-bottom: 20px;
 }
 
-/* Mobile styles */
-@media (max-width: 768px) {
-  .menu-toggle {
-    display: block;
-    font-size: 28px;
-    cursor: pointer;
-    margin-right: 10px;
-  }
-
-  nav {
-    flex-direction: column;
-    background-color: #444;
-    position: fixed;
-    top: 50px; 
-    left: -60%;
-    width: 60%;
-    height: 80%;
-    padding-top: 20px;
-    border-radius: 0 5px 5px 0;
-    transition: left 0.3s ease;
-    z-index: 1000;
-  }
-
-  nav a {
-    padding: 12px 15px;
-    border-bottom: 1px solid #555;
-  }
-
-  nav a:hover {
-    background-color: #555;
-    color: #ffeb3b;
-  }
-
-  .close-btn {
-    display: block; /* ✅ Only visible on mobile */
-    font-size: 24px;
-    color: white;
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    cursor: pointer;
-  }
-
-  .btns {
-    flex-direction: column;
-    gap: 10px;
-    margin-top: 10px;
-    padding: 0 15px; /* add horizontal padding inside the nav */
-  }
-
-  .btns a {
-    padding: 10px;
-    text-align: center;
-    border-radius: 4px;
-  }
+/* Nav links stacked */
+.nav-links {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 
+.nav-links a {
+  color: white;
+  text-decoration: none;
+  font-size: 16px;
+  padding: 6px 0;
+  transition: background 0.3s, color 0.3s;
+}
+
+.nav-links a:hover {
+  background-color: #34495e;
+  padding-left: 8px;
+  border-left: 3px solid #f1c40f;
+  color: #f1c40f;
+}
+
+/* Auth buttons */
+.auth-bar a {
+  color: #f1c40f;
+  text-decoration: none;
+  padding: 6px 12px;
+  background-color: white;
+  border-radius: 4px;
+  font-weight: bold;
+  transition: background 0.3s, color 0.3s;
+}
+
+.auth-bar a:hover {
+  background-color: #f1c40f;
+  color: white;
+}
+
+/* User avatar */
+.user-avatar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #f39c12;
+  font-size: 12px;
+}
+
+.user-avatar .circle {
+  width: 34px;
+  height: 34px;
+  background-color: #3498db;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  font-size: 16px;
+  margin-bottom: 2px;
+}
+
+/*  end of navbar...................................*/
 
     .hero {
       padding: 4rem 2rem;
@@ -814,32 +799,146 @@ nav a:hover::after {
   }
 }
 /* end of terms and conditions */
+
+/* privacy policy */
+
+.privacy-section {
+  background: #0d1b2a; /* deep navy blue */
+  padding: 60px 20px;
+  max-width: 1000px;
+  margin: 60px auto;
+  border-radius: 10px;
+  color: #f1f1f1;
+  overflow: hidden;
+}
+
+.privacy-section h2 {
+  text-align: center;
+  font-size: 38px;
+  color: #4bb3fd; /* light blue accent */
+  margin-bottom: 30px;
+}
+
+.privacy-content {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.privacy-img {
+  width: 250px;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 50%;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  opacity: 0;
+  transform: translateX(-50px);
+  transition: opacity 1s ease, transform 1s ease;
+}
+
+.privacy-text {
+  flex: 1;
+  opacity: 0;
+  transform: translateX(50px);
+  transition: opacity 1s ease, transform 1s ease;
+}
+
+.privacy-text p {
+  font-size: 17px;
+  line-height: 1.8;
+  margin-bottom: 15px;
+  color: #dbe2ef;
+}
+
+.privacy-img.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.privacy-text.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+@media (max-width: 768px) {
+  .privacy-content {
+    flex-direction: column;
+  }
+
+  .privacy-img {
+    width: 180px;
+    height: 180px;
+  }
+
+  .privacy-section h2 {
+    font-size: 28px;
+  }
+
+  .privacy-text p {
+    font-size: 15px;
+  }
+}
+
+/* end of privacy policy */
   </style>
 </head>
 <body>
 
- <header>
-  <!-- ☰ button on the left -->
-  <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+ <header style="
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #2c3e50;
+    color: white;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    position: relative;
+    z-index: 1000;
+">
+  <!-- ☰ menu toggle -->
+  <div class="menu-toggle" onclick="toggleMenu()" style="cursor: pointer; font-size: 24px;">
+    ☰
+  </div>
 
-  <div class="logo">CarBooking</div>
+  <!-- Logo -->
+  <div class="logo" style="font-size: 20px; font-weight: bold;">
+    CarBooking
+  </div>
 
-  <nav id="navbar">
-    <!-- ✖ close button inside the nav -->
-    <span class="close-btn" onclick="toggleMenu()" style="color: white;">&times;</span>
-    
-    <a href="#">Home</a>
-    <a href="#">About</a>
-    <a href="#">Contact</a>
-    <a href="#">FAQ</a>
-    <a href="#">Terms</a>
-    <a href="#">Privacy</a>
-    <div class="btns">
-      <a href="{% url 'register' %}" class="signup">Sign Up</a>
-      <a href="{% url 'login' %}" class="login">Login</a>
+  <!-- Right side: Auth buttons + User -->
+  <div class="auth-bar" style="display: flex; align-items: center; gap: 15px;">
+    <a href="{% url 'register' %}" class="signup">Sign Up</a>
+     {% if user.is_authenticated %}
+        <a href="{% url 'logout' %}" class="login">Logout</a>
+    {% else %}
+        <a href="{% url 'login' %}" class="login">Login</a>
+    {% endif %}
+
+    {% if user.is_authenticated %}
+    <div class="user-avatar">
+      <div class="circle">{{ user.username|first|upper }}</div>
+      <span>{{ user.username }}</span>
     </div>
-  </nav>
+    {% endif %}
+  </div>
 </header>
+
+<!-- Sliding nav links only -->
+<nav id="navbar">
+  <span class="close-btn" onclick="toggleMenu()" style="color: white;">&times;</span>
+
+  <div class="nav-links">
+    <a href="#home">Home</a>
+    <a href="#about">About</a>
+    <a href="#products">Our Products</a>
+    <a href="#faq">FAQ</a>
+    <a href="#terms">Terms</a>
+    <a href="#privacy">Privacy</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
 
      
   {% if messages %}
@@ -850,7 +949,7 @@ nav a:hover::after {
   </div>
 {% endif %}
   
-  <section class="hero">
+  <section class="hero" id="home">
   <h1 class="typing-text" data-text="Book Your Dream Car Now"></h1>
   <p class="typing-text" data-text="Affordable, Reliable, and Fast Car Booking Services"></p>
 </section>
@@ -858,7 +957,7 @@ nav a:hover::after {
 
 <!--About Section-->
 
-<section class="about-section">
+<section class="about-section" id="about">
   <div class="about-container">
     <div class="about-text">
       <h2>About Us</h2>
@@ -872,7 +971,7 @@ nav a:hover::after {
   </div>
 </section>
 
-    <section class="car-section">
+    <section class="car-section" id="products">
     <h2>Available Cars</h2>
     <div class="car-grid">
       {% for car in cars %}
@@ -977,6 +1076,24 @@ nav a:hover::after {
       </section>
       <!--end of terms and conditions-->
 
+
+      <!--privacy policy-->
+      <section class="privacy-section" id="privacy">
+        <h2>Our Privacy Policy</h2>
+        <div class="privacy-content">
+          <img src="{% static 'images/privacy.png' %}" alt="Privacy" class="privacy-img" />
+          <div class="privacy-text">
+            <p>
+              We value your privacy and are committed to protecting your personal data. All information collected during the booking process is securely stored and used only for providing our car hire services. We never share your data with third parties without your consent.
+            </p>
+            <p>
+              Our platform uses encryption technologies to ensure that your transactions and personal details remain safe. You can book with confidence, knowing your privacy is our priority.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!--end of privacy policy-->
 
       <!--contacts section-->
       <section class="contact-us" id="contact">
@@ -1130,6 +1247,22 @@ window.addEventListener('scroll', function() {
     termsSection.classList.add('visible');
   } else {
     termsSection.classList.remove('visible');
+  }
+});
+
+//animation for the privacy policy 
+window.addEventListener('scroll', function() {
+  const img = document.querySelector('.privacy-img');
+  const text = document.querySelector('.privacy-text');
+  const position = img.getBoundingClientRect().top;
+  const screenHeight = window.innerHeight;
+
+  if (position < screenHeight - 100) {
+    img.classList.add('visible');
+    text.classList.add('visible');
+  } else {
+    img.classList.remove('visible');
+    text.classList.remove('visible');
   }
 });
 
