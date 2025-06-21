@@ -80,11 +80,11 @@ WSGI_APPLICATION = 'carbooking.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': config('DB_NAME'),
-        'USER':config('DB_USER'),
-        'PASSWORD':config('DB_PASSWORD'),
-        'HOST':config('DB_HOST'),
-        'PORT':config('DB_PORT'),
+        'NAME': config('DB_NAME', default='bookmyride_db'),
+        'USER': config('DB_USER', default='bookmyride_db_user'),
+        'PASSWORD': config('DB_PASSWORD', default='7v3mvAceR6eGnSUBhRjEJk5Vz17dhWsJ'),
+        'HOST': config('DB_HOST', default='dpg-d1bbhagdl3ps73egtjk0-a.oregon-postgres.render.com'),
+        'PORT': config('DB_PORT', default='5432'),
     }
 }
 
