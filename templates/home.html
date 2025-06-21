@@ -1046,13 +1046,13 @@ header {
           <!-- Hidden Payment Form -->
           <div class="payment-modal" id="payment-{{ car.id }}">
               <div class="payment-content">
-                  {% csrf_token %}
                   <span onclick="closePayment('{{ car.id }}')" style="color: black; font-size: 24px; cursor: pointer; position: absolute; top: 10px; right: 10px;">&times;</span>
                   <h3>Payment for {{ car.name }}</h3>
                   <p class="price">Price: Ksh {{ car.price_per_day }}</p>
 
                   {% if user.is_authenticated %}
                       <form method="POST" action="{% url 'lipa_na_mpesa_online' %}">
+                          {% csrf_token %}
                           <label for="amount">Amount</label>
                           <input type="text" name="amount" id="amount" placeholder="Enter amount" required>
 
