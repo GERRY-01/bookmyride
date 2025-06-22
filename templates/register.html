@@ -117,7 +117,7 @@
                 Already have an account? <a href="{% url 'login' %}">Log in</a>
              {% if messages %}
              {% for message in messages %}
-                <p>{{ message }}</p>
+                <p style="color: red;">{{ message }}</p>
             {% endfor %}
             {% endif %}
 
