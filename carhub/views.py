@@ -25,7 +25,7 @@ def admin_login(request):
         else:
             messages.error(request,"Invalid credentials")
         
-    return render(request, 'admin_dashboard.html')
+    return render(request, 'admin_login.html')
 
 def admin_register(request):
     if request.method == 'POST':
