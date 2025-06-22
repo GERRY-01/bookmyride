@@ -12,7 +12,7 @@ from requests.auth import HTTPBasicAuth
 
 # Create your views here.
 
-def admin_dashboard(request):
+def admin_login(request):
     if request.method == 'POST':
         username = request.POST.get("username")
         password = request.POST.get("password")
@@ -26,6 +26,24 @@ def admin_dashboard(request):
             messages.error(request,"Invalid credentials")
         
     return render(request, 'admin_dashboard.html')
+
+def admin_register(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password1 = request.POST.get('password1')
+        password2 = request.POST.get('password2')
+
+        if password1 != password2:
+            messages.error(request, "Passwords do not match.")
+        elif User.objects.filter(username=username).exists():
+            messages.error(request, "Username already exists.")
+        else:
+            User.objects.create_user(username=username, password=password1,is_staff=True)
+            messages.success(request, "Admin account created successfully. You can now log in.")
+            return redirect('admin_login')
+            
+    return render(request, 'admin_register.html')
+    
 
 def register(request):
     if request.method == 'POST':
