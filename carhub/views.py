@@ -134,7 +134,7 @@ def logout_user(request):
     is_admin = request.user.is_staff
     logout(request)
     if is_admin:
-        return redirect("admin_dashboard")
+        return redirect("admin_login")
     return redirect("login")
 
 # Integrating my app with mpesa API
