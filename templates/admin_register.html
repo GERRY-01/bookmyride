@@ -3,103 +3,128 @@
 <head>
     <meta charset="UTF-8">
     <title>Admin Registration</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
+    * {
+        box-sizing: border-box;
+    }
+
     body {
-    margin: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(to right, #4facfe, #00f2fe);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-}
+        margin: 0;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(to right, #4facfe, #00f2fe);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        padding: 20px;
+    }
 
-.form-container {
-    background-color: #ffffff;
-    padding: 30px 40px;
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-    width: 100%;
-    max-width: 400px;
-}
+    .form-container {
+        background-color: #ffffff;
+        padding: 30px 25px;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        width: 100%;
+        max-width: 400px;
+    }
 
-.register-form h2 {
-    text-align: center;
-    margin-bottom: 20px;
-    color: #333;
-}
+    .register-form h2 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #333;
+    }
 
-.input-group {
-    margin-bottom: 15px;
-}
+    .input-group {
+        margin-bottom: 15px;
+    }
 
-.input-group label {
-    display: block;
-    font-weight: bold;
-    margin-bottom: 5px;
-}
+    .input-group label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
 
-.input-group input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    transition: border-color 0.3s ease;
-}
+    .input-group input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        transition: border-color 0.3s ease;
+        font-size: 16px;
+    }
 
-.input-group input:focus {
-    border-color: #4facfe;
-    outline: none;
-}
+    .input-group input:focus {
+        border-color: #4facfe;
+        outline: none;
+    }
 
-button[type="submit"] {
-    width: 100%;
-    padding: 12px;
-    background-color: #4facfe;
-    color: white;
-    font-weight: bold;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
+    button[type="submit"] {
+        width: 100%;
+        padding: 12px;
+        background-color: #4facfe;
+        color: white;
+        font-weight: bold;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
 
-button[type="submit"]:hover {
-    background-color: #00c6ff;
-}
+    button[type="submit"]:hover {
+        background-color: #00c6ff;
+    }
 
-.login-link {
-    text-align: center;
-    margin-top: 15px;
-}
+    .login-link {
+        text-align: center;
+        margin-top: 15px;
+        font-size: 15px;
+    }
 
-.login-link a {
-    color: #4facfe;
-    text-decoration: none;
-    font-weight: bold;
-}
+    .login-link a {
+        color: #4facfe;
+        text-decoration: none;
+        font-weight: bold;
+    }
 
-.login-link a:hover {
-    text-decoration: underline;
-}
+    .login-link a:hover {
+        text-decoration: underline;
+    }
 
-.message {
-    padding: 10px;
-    border-radius: 5px;
-    margin-bottom: 10px;
-    text-align: center;
-}
+    .message {
+        padding: 10px;
+        border-radius: 5px;
+        margin-bottom: 10px;
+        text-align: center;
+        font-size: 15px;
+    }
 
-.message.error {
-    background-color: #ffe6e6;
-    color: #cc0000;
-}
+    .message.error {
+        background-color: #ffe6e6;
+        color: #cc0000;
+    }
 
-.message.success {
-    background-color: #e6ffe6;
-    color: #009900;
-}
+    .message.success {
+        background-color: #e6ffe6;
+        color: #009900;
+    }
 
+    @media (max-width: 480px) {
+        .form-container {
+            padding: 20px 15px;
+        }
+
+        .input-group input,
+        button[type="submit"] {
+            font-size: 15px;
+            padding: 10px;
+        }
+
+        .register-form h2 {
+            font-size: 22px;
+        }
+    }
 </style>
 </head>
 <body>
@@ -136,3 +161,4 @@ button[type="submit"]:hover {
     </div>
 </body>
 </html>
+
